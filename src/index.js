@@ -15,29 +15,27 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = new FormData(e.target);
   const formLocation = data.get("location");
-  displayDiv.textContent = "Loading...";
-  const weather = await getWeatherData(formLocation);
-  displayDiv.textContent = JSON.stringify(weather, null, "\t");
+  await writeWeather(formLocation);
 });
 
-async function getWeatherData(location) {
+async function writeWeather(location) {
   try {
-    const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&include=days%2Ccurrent%2Calerts&key=X7MF6JQ3HQAZ7UEMLUSVFSNPV&contentType=json`
-    );
-
-    //if there is an HTTP Error
-    if (!response.ok) {
-      throw new Error(`HTTP Error: Status ${response.status}`);
-    }
-    const jsonData = await response.json();
-    return jsonData;
+    displayDiv.textContent = "Loading...";
+    const weather = await fetchWeatherData(location);
+    displayDiv.textContent = JSON.stringify(weather, null, "\t");
   } catch (error) {
-    console.error("Error fetching weather data", error);
-    return null;
+    displayDiv.textContent = `Failed to write weather data (${error})`;
   }
 }
 
-displayDiv.textContent = "Loading...";
-const weather = await getWeatherData(myLocation);
-displayDiv.textContent = JSON.stringify(weather, null, "\t");
+async function fetchWeatherData(location) {
+  const response = await fetch(
+    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&include=days%2Ccurrent%2Calerts&key=X7MF6JQ3HQAZ7UEMLUSVFSNPV&contentType=json`
+  );
+
+  //if there is an HTTP Error
+  if (!response.ok) {
+    throw new Error(`${response.status}`);
+  }
+  return await response.json();
+}
