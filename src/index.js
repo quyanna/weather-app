@@ -7,7 +7,18 @@ import "./styles.css";
 console.log("Hello, world!");
 
 const displayDiv = document.querySelector(".weather-data");
+const form = document.querySelector(".location-form");
+const currentLocationTitle = document.querySelector("h2 .current-location");
 const myLocation = "Vancouver";
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+  const formLocation = data.get("location");
+  displayDiv.textContent = "Loading...";
+  const weather = await getWeatherData(formLocation);
+  displayDiv.textContent = JSON.stringify(weather, null, "\t");
+});
 
 async function getWeatherData(location) {
   try {
@@ -27,5 +38,6 @@ async function getWeatherData(location) {
   }
 }
 
+displayDiv.textContent = "Loading...";
 const weather = await getWeatherData(myLocation);
 displayDiv.textContent = JSON.stringify(weather, null, "\t");
