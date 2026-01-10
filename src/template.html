@@ -6,20 +6,35 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="page-container">
-      <h1>Weather App</h1>
-      <h2 class="current-location"></h2>
-      <div class="location-form">
-        <form>
-          <input
-            type="text"
-            name="location"
-            id="location"
-            placeholder="Location"
-          />
-        </form>
-      </div>
-      <div class="weather-data"></div>
+    <div class="bg">
+      <video
+        class="bgVideo is-active"
+        id="videoA"
+        autoplay
+        muted
+        loop
+        playsinline
+        src="videos/clear.mp4"
+      ></video>
+      <video class="bgVideo" id="videoB"></video>
     </div>
+
+    <main class="app">
+      <div class="glass">
+        <h1>Weather App</h1>
+        <h2 class="current-location"></h2>
+        <div class="location-form">
+          <form>
+            <input
+              type="text"
+              name="location"
+              id="location"
+              placeholder="Location"
+            />
+          </form>
+        </div>
+        <div class="weather-data"></div>
+      </div>
+    </main>
   </body>
 </html>
