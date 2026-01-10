@@ -11,6 +11,7 @@ const form = document.querySelector(".location-form");
 const currentLocationTitle = document.querySelector("h2 .current-location");
 const myLocation = "Vancouver";
 
+// Event listener for search form
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   displayDiv.textContent = "loading...";
@@ -19,10 +20,11 @@ form.addEventListener("submit", async (e) => {
   displayDiv.textContent = await fetchWeatherData(formLocation);
 });
 
+// Fetch weather data from Visual Crossing Weather API
 async function fetchWeatherData(location) {
   try {
     const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&include=days%2Ccurrent%2Calerts&key=X7MF6JQ3HQAZ7UEMLUSVFSNPV&contentType=json`
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?iconSet=icons1&unitGroup=metric&include=current&key=X7MF6JQ3HQAZ7UEMLUSVFSNPV&contentType=json`
     );
     //if there is an HTTP Error
     if (!response.ok) {
