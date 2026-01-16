@@ -1,19 +1,16 @@
 import "./reset.css";
 import "./styles.css";
 
-import clearVideo from "./videos/clear.mp4";
-import rainVideo from "./videos/rain.mp4";
-import cloudyVideo from "./videos/cloudy.mp4";
-import snowVideo from "./videos/snow.mp4";
-import windVideo from "./videos/wind.mp4";
-import { crossFadeTo, initBackgroundVideo } from "./background";
+import { fetchWeatherData, createWeatherObject } from "./api-handling";
 
-// Template for how to import images if needed in JS
-// import odinImage from "./odin.png";
+let activeLayer, idleLayer;
 
 window.addEventListener("DOMContentLoaded", async () => {
-  initBackgroundVideo();
-  await crossFadeTo(clearVideo);
+  const bgLayers = document.querySelectorAll(".bg .bg-layer");
+  activeLayer = bgLayers[0];
+  idleLayer = bgLayers[1];
+  activeLayer.className = "bg-layer active clear";
+  idleLayer.className = "bg-layer idle";
 });
 
 console.log("Hello, world!");
@@ -22,14 +19,6 @@ const displayDiv = document.querySelector(".weather-data");
 const form = document.querySelector(".location-form");
 const currentLocationTitle = document.querySelector("h2 .current-location");
 const myLocation = "Vancouver";
-
-const BACKGROUNDS = {
-  clear: clearVideo,
-  rain: rainVideo,
-  cloudy: cloudyVideo,
-  snow: snowVideo,
-  wind: windVideo,
-};
 
 // Event listener for search form
 form.addEventListener("submit", async (e) => {
@@ -40,42 +29,50 @@ form.addEventListener("submit", async (e) => {
   const json = await fetchWeatherData(formLocation);
   console.log(json);
 
+  //do nothing if no data
+  if (!json) {
+    displayDiv.textContent = "Error fetching weather data.";
+    return;
+  }
+
+  //get the weather object
+  const weatherObj = createWeatherObject(json);
+
+  displayDiv.textContent = JSON.stringify(weatherObj, null, 2);
   applyBgFromData(json);
-
-  //Get the background condition from icon
-
-  displayDiv.textContent = JSON.stringify(json);
 });
 
 function pickThemeFromData(icon) {
+  console.log("Picking theme from icon: " + icon);
   const currentWeather = (icon || "").toLowerCase();
 
-  if (icon.includes("rain")) return "rain";
-  if (icon.includes("snow")) return "snow";
-  if (icon.includes("wind")) return "wind";
-  if (icon.includes("cloud")) return "cloudy";
+  if (currentWeather.includes("rain")) return "rain";
+  if (currentWeather.includes("snow")) return "snow";
+  if (currentWeather.includes("wind")) return "wind";
+  if (currentWeather.includes("cloud")) return "cloudy";
   return "clear";
 }
 
 async function applyBgFromData(data) {
-  const theme = pickThemeFromData(data.currentConditions.icon ?? data);
-  const src = BACKGROUNDS[theme];
-  await crossFadeTo(src);
-}
-
-// Fetch weather data from Visual Crossing Weather API
-async function fetchWeatherData(location) {
+  console.log("Applying background from data: " + data);
   try {
-    const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?iconSet=icons1&unitGroup=metric&include=current&key=X7MF6JQ3HQAZ7UEMLUSVFSNPV&contentType=json`
-    );
-    //if there is an HTTP Error
-    if (!response.ok) {
-      throw new Error(`${response.status}`);
-    }
-    const jsonData = await response.json();
-    return jsonData;
+    if (!data) throw new Error("No data provided for background selection");
   } catch (error) {
-    return `There was a problem fetching weather data (${error})`;
+    console.error("Error applying background from data: " + error);
+    return;
   }
+  const theme = pickThemeFromData(data.currentConditions.icon ?? data);
+
+  if (activeLayer.classList.contains(theme)) return;
+
+  idleLayer.className = "bg-layer idle " + theme;
+  idleLayer.classList.add("active");
+  activeLayer.classList.remove("active");
+
+  setTimeout(() => {
+    const temp = activeLayer;
+    activeLayer = idleLayer;
+    idleLayer = temp;
+    idleLayer.className = "bg-layer idle";
+  }, 650);
 }
