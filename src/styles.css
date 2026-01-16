@@ -62,9 +62,69 @@ main {
   overflow-wrap: break-word;
 }
 
-.glass {
+/* .glass {
   display: flex;
   flex-direction: column;
-  max-width: 80vw;
+  align-items: center;
+
+  width: clamp(235px, 50%, 600px);
+
   z-index: 100;
+  padding: 1.5rem;
+
+  /* From https://css.glass */
+/* background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+} */
+
+#hud {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.glass {
+  width: 100%;
+  max-width: 380px;
+  padding: 30px;
+  border-radius: 75px;
+  background: #ffffff05;
+  backdrop-filter: blur(15px) saturate(120%);
+  -webkit-backdrop-filter: blur(15px) saturate(120%);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px -1px #0000001a, 0 25px 50px -12px #00000026,
+    inset 0 0 20px #ffffff0d;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-height: 800px;
+  overflow: hidden;
+  transition: all 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (max-width: 800px) {
+  .glass {
+    max-width: 800px;
+    border-radius: 100px;
+    gap: 0;
+    justify-content: center;
+  }
+
+  #result {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    margin-top: 20px;
+  }
 }
