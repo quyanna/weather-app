@@ -17,16 +17,31 @@ console.log("Hello, world!");
 
 const displayDiv = document.querySelector(".weather-data");
 const form = document.querySelector(".location-form");
-const currentLocationTitle = document.querySelector("h2 .current-location");
-const myLocation = "Vancouver";
+const btn = document.getElementById("searchBtn");
+const input = document.getElementById("location");
 
-// Event listener for search form
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+let currentLocation = null;
+
+btn.onclick = loadData;
+input.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    loadData();
+  }
+});
+
+async function loadData() {
+  const location = input.value.trim();
+  if (!location) return;
+
+  // if (location === currentLocation) {
+  //   console.log("Location unchanged, not reloading data.");
+  //   return;
+  // }
+
   displayDiv.textContent = "loading...";
-  const data = new FormData(e.target);
-  const formLocation = data.get("location");
-  const json = await fetchWeatherData(formLocation);
+  currentLocation = location;
+  const json = await fetchWeatherData(location);
   console.log(json);
 
   //do nothing if no data
@@ -40,7 +55,7 @@ form.addEventListener("submit", async (e) => {
 
   displayDiv.textContent = JSON.stringify(weatherObj, null, 2);
   applyBgFromData(json);
-});
+}
 
 function pickThemeFromData(icon) {
   console.log("Picking theme from icon: " + icon);

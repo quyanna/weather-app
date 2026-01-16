@@ -13,22 +13,26 @@
 
     <div id="hud">
       <div class="glass">
-        <div class="location-form">
-          <form>
-            <input
-              type="text"
-              name="location"
-              id="location"
-              placeholder="Location"
-            />
-            <button type="submit">-></button>
-          </form>
+        <div class="search-container">
+          <input
+            type="text"
+            name="location"
+            id="location"
+            placeholder="Enter location..."
+          />
+          <button type="submit" id="searchBtn">-></button>
         </div>
         <div id="result">
           <div class="left-side">
+            <div id="address"></div>
+            <div id="temp"></div>
+            <div id="conditions"></div>
             <div class="weather-data"></div>
           </div>
-          <div class="right-side">po pi po</div>
+          <div class="right-side">
+            <div class="grid"></div>
+            <div class="sun-times"></div>
+          </div>
         </div>
       </div>
     </div>
