@@ -109,10 +109,29 @@ main {
   gap: 25px;
   max-height: 800px;
   overflow: hidden;
-  transition: all 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: all 1.7s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-@media (max-width: 800px) {
+#result {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+}
+
+.left-side {
+  text-align: center;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media (min-width: 800px) {
   .glass {
     max-width: 800px;
     border-radius: 100px;
@@ -126,5 +145,15 @@ main {
     justify-content: space-between;
     gap: 50px;
     margin-top: 20px;
+  }
+
+  .left-side {
+    text-align: left;
+    flex: 1;
+  }
+
+  .right-side {
+    flex: 1;
+    width: 100%;
   }
 }
