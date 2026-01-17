@@ -25,13 +25,15 @@ export function createWeatherObject(json) {
     const weatherData = {
       address: json.resolvedAddress,
       conditions: json.currentConditions.conditions,
-      feelsLike: json.currentConditions.feelslike,
+      feelsLike: Math.round(json.currentConditions.feelslike),
       humidity: json.currentConditions.humidity,
-      temp: json.currentConditions.temp,
+      temp: Math.round(json.currentConditions.temp),
       sunrise: json.currentConditions.sunrise,
       sunset: json.currentConditions.sunset,
       timezone: json.timezone,
       icon: json.currentConditions.icon.toLowerCase(),
+      wind: json.currentConditions.windspeed,
+      uv: json.currentConditions.uvindex,
     };
     return weatherData;
   } catch (error) {

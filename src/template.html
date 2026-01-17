@@ -12,26 +12,36 @@
     </div>
 
     <div id="hud">
+      <h1 class="logo">WEATHER</h1>
+
       <div class="glass">
         <div class="search-container">
-          <input
-            type="text"
-            name="location"
-            id="location"
-            placeholder="Enter location..."
-          />
+          <input id="location" placeholder="Enter location..." />
           <button type="submit" id="searchBtn">-></button>
         </div>
         <div id="result">
           <div class="left-side">
             <div id="address"></div>
-            <div id="temp"></div>
+            <div id="temp" class="big"></div>
             <div id="conditions"></div>
-            <div class="weather-data"></div>
           </div>
           <div class="right-side">
-            <div class="grid"></div>
-            <div class="sun-times"></div>
+            <div class="grid">
+              <div><span>Feels</span><span id="feelslike"></span></div>
+              <div><span>Wind</span><span id="wind"></span></div>
+              <div><span>Humidity</span><span id="humidity"></span></div>
+              <div><span>UV</span><span id="uv"></span></div>
+            </div>
+            <div class="sun-times">
+              <span id="sunrise">
+                <span class="sun-label">Rise</span>
+                <span id="sunrise-value"></span>
+              </span>
+              <span id="sunset">
+                <span class="sun-label">Set</span>
+                <span id="sunset-value"></span>
+              </span>
+            </div>
           </div>
         </div>
       </div>

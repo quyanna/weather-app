@@ -34,27 +34,31 @@ async function loadData() {
   const location = input.value.trim();
   if (!location) return;
 
-  // if (location === currentLocation) {
-  //   console.log("Location unchanged, not reloading data.");
-  //   return;
-  // }
+  document.body.style.cursor = "wait";
 
-  displayDiv.textContent = "loading...";
-  currentLocation = location;
-  const json = await fetchWeatherData(location);
-  console.log(json);
+  try {
+    const json = await fetchWeatherData(location);
+    console.log(json);
+    const w = createWeatherObject(json);
 
-  //do nothing if no data
-  if (!json) {
-    displayDiv.textContent = "Error fetching weather data.";
-    return;
+    document.getElementById("address").textContent = w.address;
+    document.getElementById("temp").textContent = w.temp + "°";
+    document.getElementById("conditions").textContent = w.conditions;
+    document.getElementById("feelslike").textContent = `${w.feelsLike}°`;
+    document.getElementById("wind").textContent = `${w.wind} km/h`;
+    document.getElementById("humidity").textContent = `${w.humidity}%`;
+    document.getElementById("uv").textContent = w.uv;
+    document.getElementById("sunrise-value").textContent = w.sunrise;
+    document.getElementById("sunset-value").textContent = w.sunset;
+
+    applyBgFromData(json);
+  } catch (error) {
+    console.error("Error fetching weather data: " + error);
+  } finally {
+    document.body.style.cursor = "default";
   }
 
   //get the weather object
-  const weatherObj = createWeatherObject(json);
-
-  displayDiv.textContent = JSON.stringify(weatherObj, null, 2);
-  applyBgFromData(json);
 }
 
 function pickThemeFromData(icon) {
