@@ -227,6 +227,27 @@ body {
   transform: scale(1.05);
 }
 
+@media (max-width: 400px) {
+  .glass {
+    padding: 20px;
+  }
+
+  #location {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  #searchBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .search-container {
+    gap: 8px;
+  }
+}
+
 @media (min-width: 800px) {
   .glass {
     max-width: 800px;
