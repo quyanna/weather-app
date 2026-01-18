@@ -13,14 +13,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   idleLayer.className = "bg-layer idle";
 });
 
-console.log("Hello, world!");
-
-const displayDiv = document.querySelector(".weather-data");
-const form = document.querySelector(".location-form");
 const btn = document.getElementById("searchBtn");
 const input = document.getElementById("location");
-
-let currentLocation = null;
+const glassPanel = document.querySelector(".glass");
 
 btn.onclick = loadData;
 input.addEventListener("keypress", function (e) {
@@ -30,6 +25,7 @@ input.addEventListener("keypress", function (e) {
   }
 });
 
+// Loads the weather data for the location currently in the search bar
 async function loadData() {
   const location = input.value.trim();
   if (!location) return;
@@ -52,13 +48,15 @@ async function loadData() {
     document.getElementById("sunset-value").textContent = w.sunset;
 
     applyBgFromData(json);
+
+    if (glassPanel.classList.contains("collapsed")) {
+      glassPanel.classList.remove("collapsed");
+    }
   } catch (error) {
     console.error("Error fetching weather data: " + error);
   } finally {
     document.body.style.cursor = "default";
   }
-
-  //get the weather object
 }
 
 function pickThemeFromData(icon) {

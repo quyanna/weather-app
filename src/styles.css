@@ -263,6 +263,10 @@ body {
     max-height: 85px;
   }
 
+  .collapsed > #result {
+    display: none;
+  }
+
   #result {
     flex-direction: row;
     align-items: center;
