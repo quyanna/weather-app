@@ -2,6 +2,8 @@
 
 A sleek, responsive weather application that provides real-time weather information with dynamic gradient backgrounds that adapt to the current weather conditions.
 
+![Weather App Screenshot](./readme_img/weather.gif)
+
 ## Features
 
 - **Real-time Weather Data**: Fetches current weather information from the Visual Crossing Weather API
@@ -54,7 +56,7 @@ This app uses the Visual Crossing Weather API. You'll need to sign up for a free
 
 ```javascript
 const response = await fetch(
-  `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?&unitGroup=metric&include=current&key=YOUR_API_KEY&contentType=json`
+  `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?&unitGroup=metric&include=current&key=YOUR_API_KEY&contentType=json`,
 );
 ```
 
